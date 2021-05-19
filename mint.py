@@ -13,7 +13,7 @@ api = Api(app, version='1.0', title='TodoMVC API',
 )
 
 
-
+#Database Configuration
 app.config['MYSQL_USER'] = 'sql6412670'
 app.config['MYSQL_PASSWORD'] = '9fTSdCmkNt'
 app.config['MYSQL_HOST'] = 'sql6.freemysqlhosting.net'
@@ -23,6 +23,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
+
+
+#Initial Database initialisation
 @app.route('/ind')
 def index():
     cur = mysql.connection.cursor()
@@ -41,6 +44,7 @@ def index():
 
 ns = api.namespace('todos', description='TODO operations')
 
+#Model
 todo = api.model('Todo', {
     'id': fields.Integer(readonly=True, description='The task unique identifier'),
     'task': fields.String(required=True, description='The task details'),
@@ -50,10 +54,7 @@ todo = api.model('Todo', {
 
 
 
-
-
-
-
+#Adding Arguments
 task_put_args = reqparse.RequestParser()
 task_put_args.add_argument("id", type = int, help = "ID is required", required = True)
 task_put_args.add_argument("task", type = str, help = "Task are required", required = True)
@@ -133,7 +134,7 @@ class TodoList(Resource):
         return [results]
 
        
-
+#Argument Parser for Status
 parser = reqparse.RequestParser()
 parser.add_argument('new_status',type=str)
 

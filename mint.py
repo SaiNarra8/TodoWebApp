@@ -116,7 +116,8 @@ class TodoList(Resource):
         results = cur.fetchall()
         cur.close()
         mysql.connection.commit()
-        #return [results]
+        #return [results] '''For database retrieval'''
+        
         return DAO.todos
 
     @ns.doc('create_todo')
